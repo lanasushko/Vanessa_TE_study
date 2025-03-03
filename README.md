@@ -10,5 +10,5 @@ The resulting libraries were combined with the RepBase Arthropoda library, the D
 
 ### 02_TE_annotation
 
-Repetitive sequences were annotated in the genomes with RepeatMasker, version 4.1.5. The annotation was filtered so that only the RepeatMasker hits with more than 300 of score, less than 40% divergency and more than 80 bp in length were retained in the library.
+Repetitive sequences were annotated in the genomes with RepeatMasker, version 4.1.5 [`repeatmasker.sh`]. The annotation was filtered so that only the RepeatMasker hits with more than 300 of score, less than 40% divergency and more than 80 bp in length were retained in the library [`filtering_annotation.sh`].
 
