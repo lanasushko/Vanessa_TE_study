@@ -20,9 +20,13 @@ The TE composition of each genome was obtained using modified versions of `build
 
 Correlation between TE content and chromosome size was tested using linear models (`lm()`) function in R. Correlations between TE content - CDS content and TE content - GC content in 10Kb genomic windows was tested in the same way.
 
-#### 03.2_Genomic_synteny_Figure_2 [check!]
+#### 03.2_Genomic_synteny_Figure_2
 To investigate genomic rearrangements between V. cardui (as reference) and V. atalanta, V. tamemea and A. io genomes (as queries) a whole-genome alignment was performed using [minimap2](https://github.com/lh3/minimap2). We used the -x asm20 parameter recommended for alignments with up to 20% sequence divergence [`mapforsynteny.sh`]. The TE annotations for each species were used to generate window-based representation of TE density per 10KB-long genomic window generated with `bedtools makewindows` [`get_TEbp_per_window.sh`]. 
 
 The synteny was visualized using [gggenomes](https://github.com/thackl/gggenomes/) [`ggggenomes_synteny_vanessa.R`].
 
+#### 03.3_Mitochondrial_insertion_Figure_3
 
+
+#### 03.4_GO_enrichment_Figure_4
+Enrichment analysis for the presence of MITEs inside genes and in gene flanking regions was performed using `bedtools` package to retrieve genes and flanks with MITE insertions. Flanking regions for protein-coding genes were extracted using `bedtools flank -b 1000`. Gene annotations were downloaded from respective NCBI genome assembly portals. Proteins from were annotated by [eggNOG-mapper](https://github.com/eggnogdb/eggnog-mapper) to retrieve GO terms associated with each gene. The code for protein ortholog mapping and post-processing to obtain comparable protein seeds and GO terms are located in `eggogmapper.sh` , `get_seeds_for_enrichment.sh` , `produce_background_seeds_list.sh`. Afterwards, [clusterProfiler](https://github.com/YuLab-SMU/clusterProfiler) R package was used to perform enrichment analysis using `enricher()` function [`enrichment.R`].
