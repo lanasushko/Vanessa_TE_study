@@ -12,7 +12,7 @@ The collapsed (non-overlapping) versions of the annotation have been generated u
 
 ### 02_TE_annotation
 
-Repetitive sequences were annotated in the genomes with RepeatMasker, version 4.1.5 [`repeatmasker.sh`]. The annotation was filtered so that only the RepeatMasker hits with more than 300 of score, less than 40% divergency and more than 80 bp in length were retained in the library [`filtering_annotation.sh`].
+Repetitive sequences were annotated in the genomes with RepeatMasker, version 4.1.5 [`repeatmasker.sh`]. The annotation was filtered so that only the RepeatMasker hits with more than 300 of score, less than 40% divergency and more than 80 bp in length were retained in the annotation [`filtering_annotation.sh`].
 
 ### 03_Analyses
 #### 03.1_TE_content_Figure_1
@@ -21,6 +21,8 @@ The TE composition of each genome was obtained using modified versions of `build
 Correlation between TE content and chromosome size was tested using linear models (`lm()`) function in R. Correlations between TE content - CDS content and TE content - GC content in 10Kb genomic windows was tested in the same way.
 
 #### 03.2_Genomic_synteny_Figure_2 [check!]
-To investigate genomic rearrangements between V. cardui (as reference) and V. atalanta, V. tamemea and A. io genomes (as queries) a whole-genome alignment was performed using [minimap2](https://github.com/lh3/minimap2). We used the -x asm20 parameter recommended for alignments with up to 20% sequence divergence. The synteny was visualized using [gggenomes](https://github.com/thackl/gggenomes/).
+To investigate genomic rearrangements between V. cardui (as reference) and V. atalanta, V. tamemea and A. io genomes (as queries) a whole-genome alignment was performed using [minimap2](https://github.com/lh3/minimap2). We used the -x asm20 parameter recommended for alignments with up to 20% sequence divergence [`mapforsynteny.sh`]. The TE annotations for each species were used to generate window-based representation of TE density per 10KB-long genomic window generated with `bedtools makewindows` [`get_TEbp_per_window.sh`]. 
+
+The synteny was visualized using [gggenomes](https://github.com/thackl/gggenomes/) [`ggggenomes_synteny_vanessa.R`].
 
 
