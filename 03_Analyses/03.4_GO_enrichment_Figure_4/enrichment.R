@@ -1,11 +1,12 @@
-setwd("~/Documents/PROJECTS/3_IBB_vanessa/manuscript/FIG4_enrichment/")
+setwd("/tmp/global2/ssushko/Vanessa_proj/5_enrichment/gene_TEcov/data_for_R")
 
 library(clusterProfiler)
 
 ### CARDUI ###
 
-seeds=read.table('cardui.seeds_with_MITEs.list')
-# seeds=read.table('card_seeds_with_flankMITEs.list')
+# seeds=read.table('cardui.seeds_with_MITEs.list') # MITE gene
+# seeds=read.table('card_seeds_with_flankMITEs.list') # MITE gene flamks
+seeds=read.table('../cardui/seeds_with_TEs.list') # All TE gene 
 seeds=seeds[['V1']]
 card.seeds=seeds
 seeduniverse=read.table('cardui.seeds.list')
@@ -15,8 +16,9 @@ TERM2seed=read.table('cardui.GO-seed.2cols.list')
 card.TERM2seed=TERM2seed
 
 ### ATALANTA ###
-seeds=read.table('atalanta.seeds_with_MITEs.list')
-# seeds=read.table('atal_seeds_with_flankMITEs.list')
+# seeds=read.table('atalanta.seeds_with_MITEs.list') # MITE gene
+# seeds=read.table('atal_seeds_with_flankMITEs.list') # MITE gene flamks
+seeds=read.table('../atalanta/seeds_with_TEs.list') # All TE gene 
 seeds=seeds[['V1']]
 atal.seeds=seeds
 seeduniverse=read.table('atalanta.seeds.list')
@@ -26,8 +28,10 @@ TERM2seed=read.table('atalanta.GO-seed.2cols.list')
 atal.TERM2seed=TERM2seed
 
 ### AGLAIS IO ###
-seeds=read.table('aglaisio.seeds_with_MITEs.list')
-# seeds=read.table('aio_seeds_with_flankMITEs.list')
+# seeds=read.table('aglaisio.seeds_with_MITEs.list') # MITE gene
+# seeds=read.table('aio_seeds_with_flankMITEs.list') # MITE gene flamks
+# seeds=read.table('../aglaisio/seeds_with_LTRs.list') # LTR gene
+seeds=read.table('../aglaisio/seeds_with_TEs.list') # All TE gene 
 seeds=seeds[['V1']]
 aio.seeds=seeds
 seeduniverse=read.table('aglaisio.seeds.list')
@@ -37,8 +41,9 @@ TERM2seed=read.table('aglaisio.GO-seed.2cols.list')
 aio.TERM2seed=TERM2seed
 
 ### TAMEAMEA ###
-seeds=read.table('tameamea.seeds_with_MITEs.list')
-# seeds=read.table('tam_seeds_with_flankMITEs.list')
+# seeds=read.table('tameamea.seeds_with_MITEs.list') # MITE gene
+# seeds=read.table('tam_seeds_with_flankMITEs.list') # MITE gene flamks
+seeds=read.table('../tameamea/seeds_with_TEs.list') # All TE gene 
 seeds=seeds[['V1']]
 tam.seeds=seeds
 seeduniverse=read.table('tameamea.seeds.list')
@@ -72,27 +77,29 @@ library(enrichplot)
 library(ggupset)
 library(ggplot2)
 
-# Barplot
-barplot(card.enrichseed, showCategory = 20) 
-mutate(enrichseed, qscore = -log(p.adjust, base = 10)) %>% 
-  barplot(x = "qscore")
-
-# Dotplot
-dotplot(enrichseed, showCategory = 15)
-
-# Cnetplot
-cnetplot(enrichseed)
-
-# Heatplot
-heatplot(enrichseed, showCategory = 5)
+# # Barplot
+# barplot(card.enrichseed, showCategory = 20) 
+# mutate(enrichseed, qscore = -log(p.adjust, base = 10)) %>% 
+#   barplot(x = "qscore")
+# 
+# # Dotplot
+# dotplot(card.enrichseed, showCategory = 15)
+# 
+# # Cnetplot
+# cnetplot(enrichseed)
+# 
+# # Heatplot
+# heatplot(enrichseed, showCategory = 5)
 
 # Treeplot
+
+# get pairwise term similarity matrix
 card.enrichres <- pairwise_termsim(card.enrichseed) 
 atal.enrichres <- pairwise_termsim(atal.enrichseed) 
 tam.enrichres <- pairwise_termsim(tam.enrichseed) 
 aio.enrichres <- pairwise_termsim(aio.enrichseed) 
 
-
+# per species tree plots
 treeplot(card.enrichres) #+ guides(size = guide_legend(override.aes = list(size = c(100,200,300))))
 treeplot(atal.enrichres)
 treeplot(tam.enrichres)
@@ -100,69 +107,35 @@ treeplot(aio.enrichres)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# random sample test
-
-foe=sample(universe, 3897)
-foenrich=enricher(gene=foe, pvalueCutoff = 0.05, pAdjustMethod = "BH", 
-                universe=universe, minGSSize = 10, maxGSSize = 500, qvalueCutoff = 0.2, 
-                TERM2GENE=TERM2GENE, TERM2NAME=TERM2NAME)
-
-barplot(foenrich, showCategory = 20) 
-# ok this shows 
-
-
 ##################################
 # for 4 species comparative plot #
 ##################################
 
 ########### combine enricher results ############
-df_cardui=card.enrichseed@result
-df_atalanta=atal.enrichseed@result
-df_tameamea=tam.enrichseed@result
-df_aio=aio.enrichseed@result
-# Combine the data frames
-combined_df <- rbind(df_cardui, df_atalanta,df_tameamea,df_aio)
+# df_cardui=card.enrichseed@result
+# df_atalanta=atal.enrichseed@result
+# df_tameamea=tam.enrichseed@result
+# df_aio=aio.enrichseed@result
+# # Combine the data frames
+# combined_df <- rbind(df_cardui, df_atalanta,df_tameamea,df_aio)
 
 #
-compare_result <- new("compareClusterResult",
-                      compareClusterResult = combined_df,
-                      geneClusters = list(
-                        cardui = card.seeds,
-                        atalanta = atal.seeds,
-                        tameamea = tam.seeds,
-                        aio = aio.seeds
-                      ),
-                      fun = "enricher",
-                      readable=FALSE ,
-                      keytype='UNKNOWN'
-)
-
-compare <- pairwise_termsim(compare_result)
-
-treeplot(compare_result)
+# compare_result <- new("compareClusterResult",
+#                       compareClusterResult = combined_df,
+#                       geneClusters = list(
+#                         cardui = card.seeds,
+#                         atalanta = atal.seeds,
+#                         tameamea = tam.seeds,
+#                         aio = aio.seeds
+#                       ),
+#                       fun = "enricher",
+#                       readable=FALSE ,
+#                       keytype='UNKNOWN'
+# )
+# 
+# compare <- pairwise_termsim(compare_result)
+# 
+# treeplot(compare_result)
 
 df_cardui=na.omit(card.enrichres@result)
 df_cardui$species=sample('cardui',nrow(df_cardui),replace=T)
@@ -218,4 +191,15 @@ compare_result_compcl <- compareCluster(geneClusters = gene_clusters, fun = "enr
 
 compare <- pairwise_termsim(compare_result)
 treeplot(compare, hclust_method = "average", showCategory=20)
+
+
+#### RANDOM SAMPLE TEST ####
+
+foe=sample(universe, 3897)
+foenrich=enricher(gene=foe, pvalueCutoff = 0.05, pAdjustMethod = "BH", 
+                  universe=universe, minGSSize = 10, maxGSSize = 500, qvalueCutoff = 0.2, 
+                  TERM2GENE=TERM2GENE, TERM2NAME=TERM2NAME)
+
+barplot(foenrich, showCategory = 20) 
+# ok this shows 
 
