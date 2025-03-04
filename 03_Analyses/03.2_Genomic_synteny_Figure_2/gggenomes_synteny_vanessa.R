@@ -1,4 +1,4 @@
-setwd("~/Documents/PROJECTS/3_IBB_vanessa/manuscript/FIG2_synteny/gggenomes_synteny_density_plot")
+setwd("/tmp/global2/ssushko/Vanessa_proj/2_synteny/synteny_analyses")
 library(gggenomes)
 library(ggplot2)
 
@@ -49,6 +49,10 @@ te.bpcounts=read.table("cardui.TEbp.per.window.table")
 colnames(te.bpcounts)=c('seq_id','start','end','te.bp')
 te.bpcounts <- te.bpcounts[order(te.bpcounts$te.bp),]
 
+# add tandem repeat data
+repeat.bpcounts=read.table('/tmp/global2/ssushko/Vanessa_proj/satellites/cardui/density/vcard_repeat.windows')
+colnames(repeat.bpcounts)=c('seq_id','start','end','repeat.bp')
+repeat.bpcounts <- repeat.bpcounts[order(repeat.bpcounts$repeat.bp),]
 
 
 # plot
@@ -108,10 +112,22 @@ reordered_plots <- plots[c(
 
 grid.arrange(grobs=reordered_plots, ncol=4)
 
-#### individual TE density plots
+#### individual density plots
 te.bpcounts$seq_id=factor(te.bpcounts$seq_id, levels=cardui_chrs)
+repeat.bpcounts$seq_id=factor(repeat.bpcounts$seq_id, levels=cardui_chrs)
 
-
+# TEs
 ggplot(data=te.bpcounts, aes(x=start,y=te.bp, group=seq_id, fill=te.bp)) +
   geom_col() + facet_wrap(~seq_id,ncol=4) + theme_classic() + scale_fill_gradient(low = "#b50707", high = "yellow", na.value = NA)
+
+# Repeats
+# stable y
+ggplot(data=repeat.bpcounts, aes(x=start,y=repeat.bp, group=seq_id, fill=repeat.bp)) +
+  geom_col() + facet_wrap(~seq_id,ncol=4) + theme_classic() + scale_fill_gradient(low = "#b50707", high = "yellow", na.value = NA)
+
+# free y
+ggplot(data=repeat.bpcounts, aes(x=start,y=repeat.bp, group=seq_id, fill=repeat.bp)) +
+  geom_col() + facet_wrap(~seq_id,ncol=4, scales='free_y') + theme_classic() + scale_fill_gradient(low = "#b50707", high = "yellow", na.value = NA)
+
+
 
