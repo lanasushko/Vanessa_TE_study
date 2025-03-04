@@ -25,12 +25,10 @@ To investigate genomic rearrangements between *V. cardui* (as reference) and *V.
 
 The synteny was visualized using [gggenomes](https://github.com/thackl/gggenomes/) [`gggenomes_synteny_vanessa.R`].
 
-#### 03.3_Mitochondrial_insertion_Figure_3
+#### 03.3_Mitochondrial_insertion_Figure_3 [to finish]
+The genome assembly of *Vanessa cardui* (ilVanCard2.2) was aligned to its mitochondrial chromosome using `minimap2` [`alignment.sh`]. A mitochondrial insertion was identified on chromosome W, the presence of coding genes was checked using the annotation retrieved from NCBI.
 
-
-
-
-#### 03.4_GO_enrichment_Figure_4
+#### 03.4_GO_enrichment_Figure_4 [check! for changes]
 Enrichment analysis for the presence of MITEs inside genes and in gene flanking regions was performed using `bedtools` package to retrieve genes and flanks with MITE insertions. Flanking regions for protein-coding genes were extracted using `bedtools flank -b 1000`. Gene annotations were downloaded from respective NCBI genome assembly portals. Proteins from were annotated by [eggNOG-mapper](https://github.com/eggnogdb/eggnog-mapper) to retrieve GO terms associated with each gene. The code for protein ortholog mapping and post-processing to obtain comparable protein seeds and GO terms are located in `eggogmapper.sh` , `get_seeds_for_enrichment.sh` , `produce_background_seeds_list.sh`. Afterwards, [clusterProfiler](https://github.com/YuLab-SMU/clusterProfiler) R package was used to perform enrichment analysis using `enricher()` function [`enrichment.R`].
 
 #### 03.5_Gene_expansions_Figure_5
