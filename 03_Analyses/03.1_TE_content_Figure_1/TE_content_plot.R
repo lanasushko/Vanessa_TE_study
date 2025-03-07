@@ -1,4 +1,4 @@
-setwd("~/Documents/PROJECTS/3_IBB_vanessa/New_repeat_annotations/commonlib4sp_withnewtameameagenome")
+setwd("/tmp/global2/ssushko/Vanessa_proj/1_repeat_annotation/for_R_data")
 
 # data input
 aio=read.csv(file = 'summaries/a_io_mch_classes.sum', header=T, sep=',',na.strings=c("","NA"))
@@ -80,21 +80,22 @@ ggplot(data=df1,mapping = aes(y=Sample, x=X.masked, fill=`TE$X1`)) +
 
 # LINEs
 
+dataline=datafull
 # the next lines should only be ran when making the LINE plots
-# datafull$TE$X2[datafull$TE$X2=="LINE"]<-"Unknown"
-# datafull$TE$X2[datafull$TE$X2=="CRE"]<-"Other"
-# datafull$TE$X2[datafull$TE$X2=="Dong-R4"]<-"Other"
-# datafull$TE$X2[datafull$TE$X2=="Jockey-I"]<-"Other"
-# datafull$TE$X2[datafull$TE$X2=="L1"]<-"Other"
-# datafull$TE$X2[datafull$TE$X2=="R2"]<-"Other"
-# datafull$TE$X2[datafull$TE$X2=="RTE-X"]<-"Other"
-# datafull$TE$X2[datafull$TE$X2=="Proto2"]<-"Other"
-# datafull$TE$X2[datafull$TE$X2=="Penelope"]<-"Other"
-# datafull$TE$X2[datafull$TE$X2=="R2-NeSL"]<-"Other"
-# datafull$TE$X2 <- factor(datafull$TE$X2, levels=c("CR1", "I", "L2","R1","R2","RTE","Unknown","Other"))
+dataline$TE$X2[dataline$TE$X2=="LINE"]<-"Unknown"
+dataline$TE$X2[dataline$TE$X2=="CRE"]<-"Other"
+dataline$TE$X2[dataline$TE$X2=="Dong-R4"]<-"Other"
+dataline$TE$X2[dataline$TE$X2=="Jockey-I"]<-"Other"
+dataline$TE$X2[dataline$TE$X2=="L1"]<-"Other"
+dataline$TE$X2[dataline$TE$X2=="R2"]<-"Other"
+dataline$TE$X2[dataline$TE$X2=="RTE-X"]<-"Other"
+dataline$TE$X2[dataline$TE$X2=="Proto2"]<-"Other"
+dataline$TE$X2[dataline$TE$X2=="Penelope"]<-"Other"
+dataline$TE$X2[dataline$TE$X2=="R2-NeSL"]<-"Other"
+dataline$TE$X2 <- factor(dataline$TE$X2, levels=c("CR1", "I", "L2","R1","R2","RTE","Unknown","Other"))
 
 library(ggbreak)
-vcardline=ggplot(data=subset(datafull, grepl("LINE", Superfamily) & grepl("V_cardui", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
+vcardline=ggplot(data=subset(dataline, grepl("LINE", Superfamily) & grepl("V_cardui", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
   geom_col(position='stack') +
   theme_classic() +
   scale_fill_manual(values=col_vector) +  xlab('% masked') +
@@ -104,8 +105,9 @@ vcardline=ggplot(data=subset(datafull, grepl("LINE", Superfamily) & grepl("V_car
         axis.ticks.y.right = element_blank(),
         axis.line.y.right = element_blank())
   #geom_text(check_overlap = F, position = position_stack(vjust = 0.5))
+vcardline
 
-aioline=ggplot(data=subset(datafull, grepl("LINE", Superfamily) & grepl("A_io", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
+aioline=ggplot(data=subset(dataline, grepl("LINE", Superfamily) & grepl("A_io", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
   geom_col(position='stack') +
   theme_classic() +
   scale_fill_manual(values=col_vector) +  xlab('% masked') +
@@ -114,8 +116,9 @@ aioline=ggplot(data=subset(datafull, grepl("LINE", Superfamily) & grepl("A_io", 
   theme(axis.text.y.right = element_blank(),
         axis.ticks.y.right = element_blank(),
         axis.line.y.right = element_blank())
+aioline
 
-vatalline=ggplot(data=subset(datafull, grepl("LINE", Superfamily) & grepl("V_atalanta", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
+vatalline=ggplot(data=subset(dataline, grepl("LINE", Superfamily) & grepl("V_atalanta", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
   geom_col(position='stack') +
   theme_classic() +
   scale_fill_manual(values=col_vector) +  xlab('% masked') +
@@ -124,8 +127,9 @@ vatalline=ggplot(data=subset(datafull, grepl("LINE", Superfamily) & grepl("V_ata
   theme(axis.text.y.right = element_blank(),
         axis.ticks.y.right = element_blank(),
         axis.line.y.right = element_blank())
+vatalline
 
-vtamline=ggplot(data=subset(datafull, grepl("LINE", Superfamily) & grepl("V_tameamea", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
+vtamline=ggplot(data=subset(dataline, grepl("LINE", Superfamily) & grepl("V_tameamea", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
   geom_col(position='stack') +
   theme_classic() +
   scale_fill_manual(values=col_vector) +  xlab('% masked') +
@@ -134,13 +138,16 @@ vtamline=ggplot(data=subset(datafull, grepl("LINE", Superfamily) & grepl("V_tame
   theme(axis.text.y.right = element_blank(),
         axis.ticks.y.right = element_blank(),
         axis.line.y.right = element_blank())
+vtamline
 
 # LTRs
 
+dataltr=datafull
 # the next lines should only be ran when making the LINE plots
-datafull$TE$X2[datafull$TE$X2=="LTR"]<-"Unknown"
+dataltr$TE$X2[dataltr$TE$X2=="LTR"]<-"Unknown"
 
-ggplot(data=subset(datafull, grepl("LTR", Superfamily) & grepl("V_cardui", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
+
+vcardltr=ggplot(data=subset(dataltr, grepl("LTR", Superfamily) & grepl("V_cardui", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
   geom_col(position='stack') +
   theme_classic() +
   scale_fill_manual(values=col_vector) +  xlab('% masked') +
@@ -150,8 +157,9 @@ ggplot(data=subset(datafull, grepl("LTR", Superfamily) & grepl("V_cardui", Sampl
         axis.ticks.y.right = element_blank(),
         axis.line.y.right = element_blank())
 #geom_text(check_overlap = F, position = position_stack(vjust = 0.5))
+vcardltr
 
-ggplot(data=subset(datafull, grepl("LTR", Superfamily) & grepl("A_io", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
+aioltrs=ggplot(data=subset(dataltr, grepl("LTR", Superfamily) & grepl("A_io", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
   geom_col(position='stack') +
   theme_classic() +
   scale_fill_manual(values=col_vector) +  xlab('% masked') +
@@ -160,8 +168,9 @@ ggplot(data=subset(datafull, grepl("LTR", Superfamily) & grepl("A_io", Sample)) 
   theme(axis.text.y.right = element_blank(),
         axis.ticks.y.right = element_blank(),
         axis.line.y.right = element_blank())
+aioltrs
 
-ggplot(data=subset(datafull, grepl("LTR", Superfamily) & grepl("V_atalanta", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
+vatalltr=ggplot(data=subset(dataltr, grepl("LTR", Superfamily) & grepl("V_atalanta", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
   geom_col(position='stack') +
   theme_classic() +
   scale_fill_manual(values=col_vector) +  xlab('% masked') +
@@ -170,8 +179,9 @@ ggplot(data=subset(datafull, grepl("LTR", Superfamily) & grepl("V_atalanta", Sam
   theme(axis.text.y.right = element_blank(),
         axis.ticks.y.right = element_blank(),
         axis.line.y.right = element_blank())
+vatalltr
 
-ggplot(data=subset(datafull, grepl("LTR", Superfamily) & grepl("V_tameamea", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
+vtamltr=ggplot(data=subset(dataltr, grepl("LTR", Superfamily) & grepl("V_tameamea", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
   geom_col(position='stack') +
   theme_classic() +
   scale_fill_manual(values=col_vector) +  xlab('% masked') +
@@ -180,6 +190,7 @@ ggplot(data=subset(datafull, grepl("LTR", Superfamily) & grepl("V_tameamea", Sam
   theme(axis.text.y.right = element_blank(),
         axis.ticks.y.right = element_blank(),
         axis.line.y.right = element_blank())
+vtamltr
 
 # col_vector=col_vector[8:30]
 # ggplot(data=subset(datafull, grepl("LTR", Superfamily)),mapping = aes(x=Sample, y=X.masked, fill=Superfamily, label=X.masked)) +
@@ -191,21 +202,22 @@ ggplot(data=subset(datafull, grepl("LTR", Superfamily) & grepl("V_tameamea", Sam
 
 # TIRs
 
+datatir=datafull
 # the next lines should only be ran when making the LINE plots
-datafull$TE$X2[datafull$TE$X2=="TIR"]<-"Unknown"
-datafull$TE$X2[datafull$TE$X2=="CMC"]<-"Other"
-datafull$TE$X2[datafull$TE$X2=="CMC-Chapaev"]<-"Other"
-datafull$TE$X2[datafull$TE$X2=="HAT-Pegasus"]<-"Other"
-datafull$TE$X2[datafull$TE$X2=="Kolobok-Hydra"]<-"Other"
-datafull$TE$X2[datafull$TE$X2=="Kolobok-T2"]<-"Other"
-datafull$TE$X2[datafull$TE$X2=="MULE"]<-"Other"
-datafull$TE$X2[datafull$TE$X2=="MULE-NOF"]<-"Other"
-datafull$TE$X2[datafull$TE$X2=="TcMar-Tc4"]<-"Other"
-datafull$TE$X2[datafull$TE$X2=="Zator"]<-"Other"
-datafull$TE$X2 <- factor(datafull$TE$X2, levels=c("Harbinger", "HAT", "MERLIN","P","PIFHARBINGER","PIGGYBAC","TcMar","Unknown","Other"))
+datatir$TE$X2[datatir$TE$X2=="TIR"]<-"Unknown"
+datatir$TE$X2[datatir$TE$X2=="CMC"]<-"Other"
+datatir$TE$X2[datatir$TE$X2=="CMC-Chapaev"]<-"Other"
+datatir$TE$X2[datatir$TE$X2=="HAT-Pegasus"]<-"Other"
+datatir$TE$X2[datatir$TE$X2=="Kolobok-Hydra"]<-"Other"
+datatir$TE$X2[datatir$TE$X2=="Kolobok-T2"]<-"Other"
+datatir$TE$X2[datatir$TE$X2=="MULE"]<-"Other"
+datatir$TE$X2[datatir$TE$X2=="MULE-NOF"]<-"Other"
+datatir$TE$X2[datatir$TE$X2=="TcMar-Tc4"]<-"Other"
+datatir$TE$X2[datatir$TE$X2=="Zator"]<-"Other"
+datatir$TE$X2 <- factor(datatir$TE$X2, levels=c("Harbinger", "HAT", "MERLIN","P","PIFHARBINGER","PIGGYBAC","TcMar","Unknown","Other"))
 
 
-ggplot(data=subset(datafull, grepl("TIR", Superfamily) & grepl("V_cardui", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
+vcardtirs=ggplot(data=subset(datatir, grepl("TIR", Superfamily) & grepl("V_cardui", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
   geom_col(position='stack') +
   theme_classic() +
   scale_fill_manual(values=col_vector) +  xlab('% masked') +
@@ -215,8 +227,9 @@ ggplot(data=subset(datafull, grepl("TIR", Superfamily) & grepl("V_cardui", Sampl
         axis.ticks.y.right = element_blank(),
         axis.line.y.right = element_blank())
 #geom_text(check_overlap = F, position = position_stack(vjust = 0.5))
+vcardtirs
 
-ggplot(data=subset(datafull, grepl("TIR", Superfamily) & grepl("A_io", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
+aiotirs=ggplot(data=subset(datatir, grepl("TIR", Superfamily) & grepl("A_io", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
   geom_col(position='stack') +
   theme_classic() +
   scale_fill_manual(values=col_vector) +  xlab('% masked') +
@@ -225,8 +238,9 @@ ggplot(data=subset(datafull, grepl("TIR", Superfamily) & grepl("A_io", Sample)) 
   theme(axis.text.y.right = element_blank(),
         axis.ticks.y.right = element_blank(),
         axis.line.y.right = element_blank())
+aiotirs
 
-ggplot(data=subset(datafull, grepl("TIR", Superfamily) & grepl("V_atalanta", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
+ataltirs=ggplot(data=subset(datatir, grepl("TIR", Superfamily) & grepl("V_atalanta", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
   geom_col(position='stack') +
   theme_classic() +
   scale_fill_manual(values=col_vector) +  xlab('% masked') +
@@ -235,8 +249,9 @@ ggplot(data=subset(datafull, grepl("TIR", Superfamily) & grepl("V_atalanta", Sam
   theme(axis.text.y.right = element_blank(),
         axis.ticks.y.right = element_blank(),
         axis.line.y.right = element_blank())
+ataltirs
 
-ggplot(data=subset(datafull, grepl("TIR", Superfamily) & grepl("V_tameamea", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
+tamtirs=ggplot(data=subset(datatir, grepl("TIR", Superfamily) & grepl("V_tameamea", Sample)) ,mapping = aes(y=TE$X2, x=X.masked, label=X.masked)) +
   geom_col(position='stack') +
   theme_classic() +
   scale_fill_manual(values=col_vector) +  xlab('% masked') +
@@ -245,7 +260,7 @@ ggplot(data=subset(datafull, grepl("TIR", Superfamily) & grepl("V_tameamea", Sam
   theme(axis.text.y.right = element_blank(),
         axis.ticks.y.right = element_blank(),
         axis.line.y.right = element_blank())
-
+tamtirs
 
 
 # col_vector=col_vector[10:30]
@@ -265,5 +280,56 @@ ggplot(data=datafull,mapping = aes(y=X.masked, x=TE$X1, fill=TE$X1)) +
   ylab('% masked') 
 
 #theme(legend.position = "none")
+
+### SAVE PLOTS
+
+# add height and width
+svg("aioline.svg", height=4, width=4.5)
+aioline
+dev.off()
+
+svg("aioltrs.svg", height=4, width=4.5)
+aioltrs
+dev.off()
+
+svg("aiotirs.svg", height=4, width=4.5)
+aiotirs
+dev.off()
+
+svg("vataltirs.svg", height=4, width=4.5)
+ataltirs
+dev.off()
+
+svg("vtamtirs.svg", height=4, width=4.5)
+tamtirs
+dev.off()
+
+svg("vatalline.svg", height=4, width=4.5)
+vatalline
+dev.off()
+
+svg("vatalltr.svg", height=4, width=4.5)
+vatalltr
+dev.off()
+
+svg("vcardline.svg", height=4, width=4.5)
+vcardline
+dev.off()
+
+svg("vcardtir.svg", height=4, width=4.5)
+vcardtirs
+dev.off()
+
+svg("vcardltr.svg", height=4, width=4.5)
+vcardltr
+dev.off()
+
+svg("vtamline.svg", height=4, width=4.5)
+vtamline
+dev.off()
+
+svg("vtamltr.svg", height=4, width=4.5)
+vtamltr
+dev.off()
 
 
